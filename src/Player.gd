@@ -26,7 +26,7 @@ func _physics_process(delta):
 		velocity.y = 0
 		
 	# Normilize to max speed
-	velocity = velocity.normalized() * MAX_SPEED
+	velocity = velocity.normalized() * MAX_SPEED * delta
 	
-	move_and_slide(velocity)
+	move_and_collide(velocity)
 
