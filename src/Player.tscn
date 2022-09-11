@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://src/art/player_character.png" type="Texture" id=1]
 [ext_resource path="res://src/Player.gd" type="Script" id=2]
@@ -11,6 +11,50 @@ animations = [ {
 "speed": 5.0
 } ]
 
+[sub_resource type="Shader" id=6]
+code = "shader_type canvas_item;
+
+void fragment() {
+	float alpha = texture(TEXTURE, UV).a;
+	COLOR.rgb = vec3(100.0 * alpha);
+	COLOR.a = alpha;
+}"
+
+[sub_resource type="ShaderMaterial" id=7]
+shader = SubResource( 6 )
+
+[sub_resource type="ViewportTexture" id=4]
+viewport_path = NodePath("Viewport")
+
+[sub_resource type="Shader" id=8]
+code = "shader_type canvas_item;
+
+uniform float alpha = 0.3;
+
+void fragment() {
+	// We sample the screen texture at this point, which has the Mask node's pixels
+	// rendered on it.
+	vec4 screen_color = texture(SCREEN_TEXTURE, SCREEN_UV);
+	vec4 tex_color = texture(TEXTURE, UV);
+	COLOR = tex_color;
+
+	// If the pixel's value is lower than the Mask's output color, it means the
+	// mask is being occluded, so we draw the silhouette instead.
+	if (screen_color.r < 1.01){
+		COLOR.rgb = tex_color.rgb;
+		if (COLOR.a != 0.0) {
+			COLOR.a = alpha;
+		}
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id=9]
+shader = SubResource( 8 )
+shader_param/alpha = 0.2
+
+[sub_resource type="ViewportTexture" id=5]
+viewport_path = NodePath("Viewport")
+
 [sub_resource type="CapsuleShape2D" id=3]
 radius = 6.0
 height = 0.0
@@ -19,13 +63,31 @@ height = 0.0
 collision_mask = 6
 script = ExtResource( 2 )
 
-[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+[node name="Viewport" type="Viewport" parent="."]
+size = Vector2( 32, 32 )
+transparent_bg = true
+hdr = false
+usage = 0
+render_target_v_flip = true
+render_target_update_mode = 3
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="Viewport"]
+position = Vector2( 16, 16 )
 frames = SubResource( 2 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
 zoom = Vector2( 0.5, 0.5 )
 smoothing_enabled = true
+
+[node name="Mask" type="Sprite" parent="."]
+material = SubResource( 7 )
+texture = SubResource( 4 )
+
+[node name="Sprite" type="Sprite" parent="."]
+material = SubResource( 9 )
+z_index = 100
+texture = SubResource( 5 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 11 )

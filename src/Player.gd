@@ -5,6 +5,8 @@ export(int) var MAX_SPEED = 100
 
 var velocity = Vector2.ZERO
 
+onready var animated_sprite := $Viewport/AnimatedSprite
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
