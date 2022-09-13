@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://src/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/resources/outside_tileset.tres" type="TileSet" id=2]
+[ext_resource path="res://src/Spawner.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/TestEntity.tscn" type="PackedScene" id=4]
+[ext_resource path="res://src/AreaSpawner.tscn" type="PackedScene" id=5]
 
 [node name="Map" type="Node2D"]
 
@@ -41,3 +44,20 @@ cell_size = Vector2( 64, 32 )
 cell_y_sort = true
 format = 1
 tile_data = PoolIntArray( -393196, 6, 8, -393195, 6, 7, -393194, 6, 7, -393193, 6, 5, -327665, 9, 1, -327660, 6, 6, -327659, 6, 4, -327658, 6, 4, -327657, 6, 2, -262127, 9, 1, -262124, 6, 6, -262123, 6, 4, -262122, 6, 4, -262121, 6, 2, -196591, 9, 0, -196588, 6, 6, -196587, 6, 4, -196586, 6, 4, -196585, 6, 4, -196584, 6, 7, -196583, 6, 5, -131055, 12, 0, -131052, 6, 3, -131051, 6, 4, -131050, 6, 4, -131049, 6, 4, -131048, 6, 4, -131047, 6, 2, -65520, 12, 1, -65515, 6, 6, -65514, 6, 4, -65513, 6, 1, -65512, 6, 1, -65511, 6, 0, 19, 11, 0, 21, 6, 6, 22, 6, 2, 65555, 11, 0, 65556, 11, 1, 65557, 6, 3, 65558, 6, 0, 196630, 11, 65537, 196631, 11, 65536, 262166, 11, 65536, 262167, 11, 1, 262168, 8, 1, 327704, 8, 0, 393230, 13, 1, 393239, 10, 0, 524312, 13, 1, 589843, 6, 0, 589848, 13, 0, 786460, 6, 0, 983065, 6, 0, 1114134, 6, 0 )
+
+[node name="Spawner" parent="." instance=ExtResource( 3 )]
+position = Vector2( 122, 465 )
+spawn_scene = ExtResource( 4 )
+spawn_delay_milliseconds = 500
+initial_spawns = 1
+
+[node name="AreaSpawner" parent="." instance=ExtResource( 5 )]
+spawn_scene = ExtResource( 4 )
+max_spawns = 20
+spawn_delay_milliseconds = 500
+initial_spawns = 2
+
+[node name="SpawnArea" parent="AreaSpawner" index="1"]
+polygon = PoolVector2Array( 491, 268, 513, 287, 442, 340, 380, 393, 284, 381, 152, 313, 68, 365, 229, 463, 196, 530, 278, 603, 440, 571, 569, 508, 654, 434, 733, 377, 755, 268, 713, 195, 545, 114, 458, 183 )
+
+[editable path="AreaSpawner"]
