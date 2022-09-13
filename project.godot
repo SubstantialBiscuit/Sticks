@@ -20,7 +20,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="SticksAndStones"
+config/name="Sticks"
 run/main_scene="res://src/Map.tscn"
 config/icon="res://icon.png"
 
