@@ -1,24 +1,36 @@
 extends Area2D
 
 
+export(String) var label_text = "Interact"
+
 onready var sprite_shader = $Sprite.material
 
 
-func _on_InteractableObject_mouse_entered():
-	# Outline the sprite on selection
-	sprite_shader.set_shader_param("color", Color.white)
+func outline(enable: bool):
+	if enable:
+		sprite_shader.set_shader_param("color", Color.white)
+	else:
+		sprite_shader.set_shader_param("color", Color.black)
 
+
+func interact(player):
+	# Overwrite function to define interact behaviour
+	print("%s interacting with %s" % [player.name, name])
+	queue_free()
+
+
+func _on_InteractableObject_mouse_entered():
+	outline(true)
 
 func _on_InteractableObject_mouse_exited():
-	sprite_shader.set_shader_param("color", Color.black)
+	outline(false)
 
+func _on_InteractableObject_body_entered(body):
+	outline(true)
+	if body.name == "Player":
+		body.entered(self)
 
-func _on_InteractableObject_input_event(viewport, event, shape_idx):
-	if event is InputEventMouseButton and event.pressed:
-		interact()
-
-
-func interact():
-	# Overwrite function to define interact behaviour
-	print("clicked")
-	queue_free()
+func _on_InteractableObject_body_exited(body):
+	outline(false)
+	if body.name == "Player":
+		body.exited(self)

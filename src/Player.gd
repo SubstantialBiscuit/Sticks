@@ -6,10 +6,9 @@ export(int) var MAX_SPEED = 100
 var velocity = Vector2.ZERO
 
 onready var animated_sprite := $Viewport/AnimatedSprite
+var object_names: Array = []
+var interactable_objects: Array = []
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
 
 func _physics_process(delta):
 	
@@ -32,3 +31,24 @@ func _physics_process(delta):
 	
 	move_and_collide(velocity)
 
+
+func entered(object):
+	# Ran when the player enters an interactable object
+	if object.has_method("interact"):
+		object_names.append(object.name)
+		interactable_objects.append(object)
+
+
+func exited(object):
+	# Ran when player exits an interactable object
+	var index = object_names.find(object.name)
+	if index != -1:
+		object_names.remove(index)
+		interactable_objects.remove(index)
+
+
+func _unhandled_input(event):
+	if event.is_action_pressed("ui_select") and not object_names.empty():
+		object_names.pop_front()
+		var obj = interactable_objects.pop_front()
+		obj.interact(self)
