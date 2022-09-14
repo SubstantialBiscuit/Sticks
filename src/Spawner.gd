@@ -5,7 +5,7 @@ export(int, 0, 100) var max_spawns = 1
 export(int) var spawn_delay_milliseconds = 1000
 export(int, 0, 100) var initial_spawns = 1
 
-var spawned = []
+onready var spawned = $Spawned
 
 onready var timer = $Timer
 
@@ -28,13 +28,12 @@ func spawn_position():
 	return Vector2.ZERO
 
 func spawn_one():
-	if len(spawned) >= max_spawns:
+	if spawned.get_child_count() >= max_spawns:
 		return
 	
 	var entity = spawn_scene.instance()
 	entity.position = spawn_position()
-	add_child(entity)
-	spawned.append(entity)
+	spawned.add_child(entity)
 
 func spawn(n):
 	for _i in range(n):
