@@ -53,7 +53,7 @@ func cummulative_sum(areas: Array) -> Array:
 
 func choose_triangle() -> Array:
 	# Randomly chooses a triangle based on the weights
-	var rand = randi() % triangle_cummulative_areas[-1] + 1
+	var rand = randi() % (triangle_cummulative_areas[-1] + 1)
 	var choice = 0
 	
 	# Selects the first scene where the random number is less than the cummulative

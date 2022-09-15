@@ -6,6 +6,7 @@ export(int) var MAX_SPEED = 100
 var velocity = Vector2.ZERO
 
 onready var animated_sprite := $Viewport/AnimatedSprite
+onready var sticks = 0
 var object_names: Array = []
 var interactable_objects: Array = []
 
@@ -52,3 +53,8 @@ func _unhandled_input(event):
 		object_names.pop_front()
 		var obj = interactable_objects.pop_front()
 		obj.interact(self)
+
+func add_sticks(n: int):
+	# TODO Popup above player saying +n sticks
+	sticks += n
+	print("Added %s sticks, total sticks = %s" % [n, sticks])

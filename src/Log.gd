@@ -16,5 +16,5 @@ func _ready():
 		)
 
 func interact(player):
-	print("Have some fucking sticks!")
+	player.add_sticks((randi() % 5) + 1)
 	queue_free()
