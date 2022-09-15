@@ -34,6 +34,8 @@ window/stretch/aspect="keep"
 [gui]
 
 common/drop_mouse_on_gui_input_disabled=true
+theme/custom="res://src/resources/sticks_theme.tres"
+theme/custom_font="res://src/resources/font.tres"
 
 [layer_names]
 
