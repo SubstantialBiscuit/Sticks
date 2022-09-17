@@ -3,7 +3,8 @@ extends Area2D
 
 export(String) var label_text = "Interact"
 
-onready var sprite_shader = $Sprite.material
+onready var animated_sprite: AnimatedSprite = $AnimatedSprite
+onready var sprite_shader = animated_sprite.material
 
 
 func outline(enable: bool):

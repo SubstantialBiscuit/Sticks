@@ -4,45 +4,27 @@
 [ext_resource path="res://src/art/outside_environment.png" type="Texture" id=2]
 [ext_resource path="res://src/Log.gd" type="Script" id=3]
 
-[sub_resource type="Shader" id=4]
-code = "shader_type canvas_item;
-
-uniform vec4 color : hint_color = vec4(1.0);
-uniform float thickness : hint_range(0.0, 10.0, 1.0) = 1.0;
-
-void fragment() {
-	vec2 size = TEXTURE_PIXEL_SIZE * thickness;
-	
-	float outline = texture(TEXTURE, UV + vec2(-size.x, 0)).a;
-	outline += texture(TEXTURE, UV + vec2(0, size.y)).a;
-	outline += texture(TEXTURE, UV + vec2(size.x, 0)).a;
-	outline += texture(TEXTURE, UV + vec2(0, -size.y)).a;
-	outline += texture(TEXTURE, UV + vec2(-size.x, size.y)).a;
-	outline += texture(TEXTURE, UV + vec2(size.x, size.y)).a;
-	outline += texture(TEXTURE, UV + vec2(size.x, -size.y)).a;
-	outline += texture(TEXTURE, UV + vec2(-size.x, -size.y)).a;
-	outline = min(outline, 1.0);
-	
-	vec4 texture_color = texture(TEXTURE, UV);
-	COLOR = mix(texture_color, color, outline - texture_color.a);
-}
-"
-
-[sub_resource type="ShaderMaterial" id=5]
-resource_local_to_scene = true
-shader = SubResource( 4 )
-shader_param/color = Color( 0, 0, 0, 1 )
-shader_param/thickness = 1.0
-
-[sub_resource type="AtlasTexture" id=1]
+[sub_resource type="AtlasTexture" id=4]
 flags = 4
 atlas = ExtResource( 2 )
-region = Rect2( 256, 785, 64, 64 )
+region = Rect2( 256, 786, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=5]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 320, 786, 64, 64 )
+
+[sub_resource type="SpriteFrames" id=3]
+animations = [ {
+"frames": [ SubResource( 4 ), SubResource( 5 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
 
 [node name="Log" instance=ExtResource( 1 )]
 script = ExtResource( 3 )
 
-[node name="Sprite" parent="." index="1"]
-material = SubResource( 5 )
+[node name="AnimatedSprite" parent="." index="1"]
 scale = Vector2( 0.5, 0.5 )
-texture = SubResource( 1 )
+frames = SubResource( 3 )
