@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://src/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/resources/outside_tileset.tres" type="TileSet" id=2]
 [ext_resource path="res://src/Log.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/Campfire.tscn" type="PackedScene" id=4]
 [ext_resource path="res://src/AreaSpawner.tscn" type="PackedScene" id=5]
 
 [node name="Map" type="Node2D"]
@@ -52,5 +53,8 @@ initial_spawns = 2
 
 [node name="SpawnArea" parent="YSort/AreaSpawner" index="1"]
 polygon = PoolVector2Array( 491, 268, 513, 287, 442, 340, 380, 393, 284, 381, 152, 313, 68, 365, 229, 463, 196, 530, 278, 603, 440, 571, 569, 508, 654, 434, 733, 377, 755, 268, 713, 195, 545, 114, 458, 183 )
+
+[node name="Campfire" parent="YSort" instance=ExtResource( 4 )]
+position = Vector2( 222, 447 )
 
 [editable path="YSort/AreaSpawner"]

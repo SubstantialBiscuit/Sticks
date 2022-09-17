@@ -1,8 +1,15 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://src/InteractableObject.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/art/outside_environment.png" type="Texture" id=2]
 [ext_resource path="res://src/Log.gd" type="Script" id=3]
+[ext_resource path="res://src/resources/sprite_outline.gdshader" type="Shader" id=4]
+
+[sub_resource type="ShaderMaterial" id=6]
+resource_local_to_scene = true
+shader = ExtResource( 4 )
+shader_param/color = Color( 0, 0, 0, 1 )
+shader_param/thickness = 1.0
 
 [sub_resource type="AtlasTexture" id=4]
 flags = 4
@@ -24,7 +31,9 @@ animations = [ {
 
 [node name="Log" instance=ExtResource( 1 )]
 script = ExtResource( 3 )
+label_text = "Gather"
 
 [node name="AnimatedSprite" parent="." index="1"]
+material = SubResource( 6 )
 scale = Vector2( 0.5, 0.5 )
 frames = SubResource( 3 )

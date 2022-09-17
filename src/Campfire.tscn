@@ -1,0 +1,55 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://src/resources/sprite_outline.gdshader" type="Shader" id=1]
+[ext_resource path="res://src/InteractableObject.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/art/campfire-small.png" type="Texture" id=3]
+[ext_resource path="res://src/Campfire.gd" type="Script" id=4]
+[ext_resource path="res://src/art/campfire-dead.png" type="Texture" id=5]
+[ext_resource path="res://src/art/campfire-medium.png" type="Texture" id=6]
+[ext_resource path="res://src/art/campfire-large.png" type="Texture" id=7]
+[ext_resource path="res://src/resources/FCTManager.tscn" type="PackedScene" id=8]
+
+[sub_resource type="ShaderMaterial" id=1]
+resource_local_to_scene = true
+shader = ExtResource( 1 )
+shader_param/color = Color( 0, 0, 0, 1 )
+shader_param/thickness = 1.0
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ ExtResource( 5 ) ],
+"loop": true,
+"name": "dead",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 7 ) ],
+"loop": true,
+"name": "large",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 6 ) ],
+"loop": true,
+"name": "medium",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 3 ) ],
+"loop": true,
+"name": "small",
+"speed": 5.0
+} ]
+
+[node name="Campfire" instance=ExtResource( 2 )]
+script = ExtResource( 4 )
+
+[node name="AnimatedSprite" parent="." index="1"]
+material = SubResource( 1 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 2 )
+animation = "large"
+
+[node name="Timer" type="Timer" parent="." index="2"]
+autostart = true
+
+[node name="FCTManager" parent="." index="3" instance=ExtResource( 8 )]
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

@@ -51,11 +51,19 @@ func exited(object):
 
 func _unhandled_input(event):
 	if event.is_action_pressed("ui_select") and not object_names.empty():
-		object_names.pop_front()
-		var obj = interactable_objects.pop_front()
-		obj.interact(self)
+		interactable_objects[0].interact(self)
 
 
 func add_sticks(n: int):
 	fct_manager.show_value("+ %s sticks" % n)
 	sticks += n
+
+
+func remove_sticks(n: int):
+	if sticks >= n:
+		fct_manager.show_value("- %s sticks" % n)
+		sticks -= n
+		return true
+	
+	fct_manager.show_value("not enough sticks")
+	return false
