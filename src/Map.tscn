@@ -57,4 +57,7 @@ polygon = PoolVector2Array( 491, 268, 513, 287, 442, 340, 380, 393, 284, 381, 15
 [node name="Campfire" parent="YSort" instance=ExtResource( 4 )]
 position = Vector2( 222, 447 )
 
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color( 0.117647, 0.117647, 0.117647, 1 )
+
 [editable path="YSort/AreaSpawner"]

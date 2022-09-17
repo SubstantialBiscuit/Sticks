@@ -3,6 +3,11 @@ extends "res://src/InteractableObject.gd"
 
 onready var fct_manager = $FCTManager
 onready var fuel = 100
+onready var light = $Light
+
+
+func _ready():
+	animated_sprite.playing = true
 
 
 func interact(player):
@@ -15,6 +20,10 @@ func interact(player):
 
 
 func update_animation():
+	var fuel_proportion = float(fuel) / 100.0
+	light.texture_scale = 3.0 + 7.0 * fuel_proportion
+	light.energy = 0.5 + 0.5 * fuel_proportion
+
 	if fuel > 70:
 		animated_sprite.animation = "large"
 	elif fuel > 30:
@@ -28,5 +37,4 @@ func update_animation():
 func _on_Timer_timeout():
 	if fuel > 0:
 		fuel = max(0, fuel - 1)
-		print("Remaining fuel %s", fuel)
 		update_animation()
